@@ -8,13 +8,13 @@ namespace BSA_LINQ.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Created_at { get; set; }
+        public System.DateTime Created_at { get; set; }
 
         public override string ToString()
         {
             return $"ID: {Id},\n" +
                 $"Name: {Name},\n" +
-                $"Created: {Created_at}";
+                $"Created: {Created_at.ToShortDateString()}";
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BSA_LINQ.Models
 
         public override string ToString()
         {
-            return $"ID: {Id}, \n" +
+            return $"ID: {Id},\n" +
                 $"Value: {Value}";
         }
     }

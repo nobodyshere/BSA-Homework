@@ -21,7 +21,7 @@ namespace BSA_LINQ.Models
                 $"First_Name: {First_Name},\n" +
                 $"Last_Name: {Last_Name},\n" +
                 $"Email: {Email},\n" +
-                $"Birthd_at: {Birthday.ToUniversalTime()},\n" +
+                $"Birthd_at: {Birthday.ToShortDateString()},\n" +
                 $"Registered_at: {Registered_at},\n" +
                 $"Team_Id: {Team_Id}";
         }
