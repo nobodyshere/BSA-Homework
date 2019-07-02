@@ -10,7 +10,7 @@ namespace BSA_LINQ.Models
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Email { get; set; }
-        public string Birthd_at { get; set; }
+        public DateTime Birthday { get; set; }
         public string Registered_at { get; set; }
         public int? Team_Id { get; set; }
 
@@ -21,7 +21,7 @@ namespace BSA_LINQ.Models
                 $"First_Name: {First_Name},\n" +
                 $"Last_Name: {Last_Name},\n" +
                 $"Email: {Email},\n" +
-                $"Birthd_at: {Birthd_at},\n" +
+                $"Birthd_at: {Birthday.ToUniversalTime()},\n" +
                 $"Registered_at: {Registered_at},\n" +
                 $"Team_Id: {Team_Id}";
         }
