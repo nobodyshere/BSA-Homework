@@ -31,6 +31,6 @@ namespace BSA_LINQ.Models
         public IEnumerable<Task> Tasks { get; set; }
         public User Performer { get; set; }
         public User Author { get; set; }
-        public Team team { get; set; }
+        public Team Team { get; set; }
     }
 }
