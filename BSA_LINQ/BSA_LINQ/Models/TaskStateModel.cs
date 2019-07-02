@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BSA_LINQ.Models
 {
-    class TaskStateModel
+    public class TaskStateModel
     {
         public int Id { get; set; }
         public string Value { get; set; }

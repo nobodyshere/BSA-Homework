@@ -1,45 +1,80 @@
 ﻿using BSA_LINQ.Models;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace BSA_LINQ
 {
-    //TODO: Make a signleton?
     public class DataProvider
     {
+        private static readonly Lazy<DataProvider> instance = new Lazy<DataProvider>(() => new DataProvider());
+
         IEnumerable<User> users;
         IEnumerable<Project> projects;
         IEnumerable<Team> teams;
-        IEnumerable<Task> tasks;
+        IEnumerable<Models.Task> tasks;
         IEnumerable<TaskStateModel> stateModels;
 
         const string route = "https://bsa2019.azurewebsites.net/api/";
         HttpClient http;
 
-        public DataProvider()
+        private DataProvider()
         {
-            users = new List<User>();
-            projects = new List<Project>();
-            teams = new List<Team>();
-            tasks = new List<Task>();
-            stateModels = new List<TaskStateModel>();
+            users = null;
+            projects = null;
+            teams = null;
+            tasks = null;
+            stateModels = null;
             http = new HttpClient();
         }
 
-        public void FetchData()
-        {
-            var projectsResult = http.GetStringAsync($"{route}/projects");
-            var usersResult = http.GetStringAsync($"{route}/users");
-            var teamsResult = http.GetStringAsync($"{route}/teams");
-            var statesResult = http.GetStringAsync($"{route}/taskstates");
-            var tasksResult = http.GetStringAsync($"{route}/tasks");
+        public static DataProvider GetInstance() => instance.Value;
 
-            users = JsonConvert.DeserializeObject<IEnumerable<User>>(usersResult.Result);
-            projects = JsonConvert.DeserializeObject<IEnumerable<Project>>(projectsResult.Result);
-            teams = JsonConvert.DeserializeObject<IEnumerable<Team>>(teamsResult.Result);
-            stateModels = JsonConvert.DeserializeObject<IEnumerable<TaskStateModel>>(statesResult.Result);
-            tasks = JsonConvert.DeserializeObject<IEnumerable<Task>>(tasksResult.Result);
+        public IEnumerable<User> GetUsers()
+        {
+            if (users == null)
+            {
+                users = JsonConvert.DeserializeObject<IEnumerable<User>>(http.GetStringAsync($"{route}/users").Result);
+            }
+            return users;
+        }
+
+        public IEnumerable<Project> GetProjects()
+        {
+            if (projects == null)
+            {
+                projects = JsonConvert.DeserializeObject<IEnumerable<Project>>(http.GetStringAsync($"{route}/projects").Result);
+            }
+            return projects;
+        }
+
+        public IEnumerable<Team> GetTeams()
+        {
+            if (teams == null)
+            {
+                teams = JsonConvert.DeserializeObject<IEnumerable<Team>>(http.GetStringAsync($"{route}/teams").Result);
+            }
+            return teams;
+        }
+
+        public IEnumerable<Models.Task> GetTasks()
+        {
+            if (tasks == null)
+            {
+                tasks = JsonConvert.DeserializeObject<IEnumerable<Models.Task>>(http.GetStringAsync($"{route}/tasks").Result);
+            }
+            return tasks;
+        }
+
+        public IEnumerable<TaskStateModel> GetStateModels()
+        {
+            if (stateModels == null)
+            {
+                stateModels = JsonConvert.DeserializeObject<IEnumerable<TaskStateModel>>(http.GetStringAsync($"{route}/taskstates").Result);
+            }
+            return stateModels;
         }
     }
 }

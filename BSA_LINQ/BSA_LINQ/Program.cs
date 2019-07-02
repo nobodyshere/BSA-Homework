@@ -6,8 +6,7 @@ namespace BSA_LINQ
     {
         static void Main(string[] args)
         {
-            DataProvider dp = new DataProvider();
-            dp.FetchData();
+            var data = DataProvider.GetInstance();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BSA_LINQ.Models
 {
-    class User
+    public class User
     {
         public int Id { get; set; }
         public string First_Name { get; set; }
