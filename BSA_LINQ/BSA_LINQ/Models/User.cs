@@ -11,7 +11,7 @@ namespace BSA_LINQ.Models
         public string Last_Name { get; set; }
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
-        public string Registered_at { get; set; }
+        public DateTime Registered_at { get; set; }
         public int? Team_Id { get; set; }
 
 
@@ -22,7 +22,7 @@ namespace BSA_LINQ.Models
                 $"Last_Name: {Last_Name},\n" +
                 $"Email: {Email},\n" +
                 $"Birthd_at: {Birthday.ToShortDateString()},\n" +
-                $"Registered_at: {Registered_at},\n" +
+                $"Registered_at: {Registered_at.ToShortDateString()},\n" +
                 $"Team_Id: {Team_Id}";
         }
     }

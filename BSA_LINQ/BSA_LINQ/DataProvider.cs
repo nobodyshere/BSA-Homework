@@ -1,9 +1,10 @@
 ﻿using BSA_LINQ.Models;
+using BSA_LINQ.Models.DTOmodels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace BSA_LINQ
 {
@@ -17,6 +18,8 @@ namespace BSA_LINQ
         IEnumerable<Models.Task> tasks;
         IEnumerable<TaskStateModel> stateModels;
 
+        public IEnumerable<ProjectDTO> projectDTOs;
+
         const string route = "https://bsa2019.azurewebsites.net/api/";
         HttpClient http;
 
@@ -28,6 +31,44 @@ namespace BSA_LINQ
             tasks = null;
             stateModels = null;
             http = new HttpClient();
+        }
+
+        public void LoadData()
+        {
+            users = GetUsers();
+            projects = GetProjects();
+            teams = GetTeams();
+            tasks = GetTasks();
+            stateModels = GetStateModels();
+
+            //projectDTOs = from task in tasks
+            //              group task by task.Project_id into t
+            //              join project in projects on t.Key equals project.Id
+            //              join author in users on project.Author_id equals author.Id
+            //              join team in teams on project.Team_id equals team.Id
+            //              select new ProjectDTO
+            //              {
+            //                  Id = project.Id,
+            //                  Tasks = t,
+            //                  Team = team,
+            //                  Author = author
+            //              };
+
+            //projectDTOs = from project in projects
+            //              join task in tasks on project.Id equals task.Project_id
+            //              group task by task.Project_id into t
+            //              join author in users on t.Author_id equals author.Id
+            //              join team in teams on project.Team_id equals team.Id
+            //              select new ProjectDTO
+            //              {
+            //                  Id = project.Id,
+            //                  Tasks = t,
+            //                  Team = team,
+            //                  Author = author
+            //              };
+
+            //Console.WriteLine("ProjectDTOs count: " + projectDTOs.Count());
+            //Console.WriteLine("Real projects count: " + projects.Count());
         }
 
         public static DataProvider GetInstance() => instance.Value;
