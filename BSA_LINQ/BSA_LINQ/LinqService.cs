@@ -1,6 +1,5 @@
 ﻿using BSA_LINQ.Models;
 using BSA_LINQ.Models.DTOmodels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -90,13 +89,24 @@ namespace BSA_LINQ
         //P.S. - в данном случае, статус таска не имеет значения, фильтруем только по дате.
         public object GetStructure(int userId)
         {
-            var result = from t in data.GetTasks()
-                         join p in data.GetProjects() on t.Project_id equals p.Id
-                         group t by data.GetUsers().
+            //Нашли
+            //Все таски для юзера
+            //Все проекты, в которых учавствует юзер юзера
+            //Юзера
+
+            //Осталось найти
+            //Общее кол-во тасков под последним проектом
+            //Общее кол-во незавершенных или отмененных тасков для пользователя
+            //Самый долгий таск пользователя по дате(раньше всего создан - позже всего закончен)
+            var result = data.GetTasks().Where(x => x.Performer_id == userId)
+                                        .Join(data.GetProjects().GroupBy(o => o.Team_id), x => x.Project_id, y => y.Id, (x, y) => new
+                                        {
+                                            User = data.GetUsers().FirstOrDefault(x => x.Id == userId),
+                                            TasksCountFromLastProject = y.
+                                        });
 
 
-
-            return result;
+            return null;
         }
 
 
