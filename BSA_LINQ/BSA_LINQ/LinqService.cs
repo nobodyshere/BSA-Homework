@@ -88,7 +88,16 @@ namespace BSA_LINQ
         //Общее кол-во незавершенных или отмененных тасков для пользователя
         //Самый долгий таск пользователя по дате(раньше всего создан - позже всего закончен)
         //P.S. - в данном случае, статус таска не имеет значения, фильтруем только по дате.
-        public
+        public object GetStructure(int userId)
+        {
+            var result = from t in data.GetTasks()
+                         join p in data.GetProjects() on t.Project_id equals p.Id
+                         group t by data.GetUsers().
+
+
+
+            return result;
+        }
 
 
 
