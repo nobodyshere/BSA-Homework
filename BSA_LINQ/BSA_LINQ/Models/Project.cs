@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BSA_LINQ.Models
+﻿namespace BSA_LINQ.Models
 {
     public class Project
     {

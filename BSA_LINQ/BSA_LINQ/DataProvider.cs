@@ -1,10 +1,8 @@
 ﻿using BSA_LINQ.Models;
-using BSA_LINQ.Models.DTOmodels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Linq;
 
 namespace BSA_LINQ
 {
@@ -15,8 +13,7 @@ namespace BSA_LINQ
         IEnumerable<User> users;
         IEnumerable<Project> projects;
         IEnumerable<Team> teams;
-        IEnumerable<Models.Task> tasks;
-        IEnumerable<TaskStateModel> stateModels;
+        IEnumerable<Task> tasks;
 
         const string route = "https://bsa2019.azurewebsites.net/api/";
         HttpClient http;
@@ -27,7 +24,6 @@ namespace BSA_LINQ
             projects = null;
             teams = null;
             tasks = null;
-            stateModels = null;
             http = new HttpClient();
         }
 
@@ -37,7 +33,6 @@ namespace BSA_LINQ
             projects = GetProjects();
             teams = GetTeams();
             tasks = GetTasks();
-            stateModels = GetStateModels();
         }
 
         public static DataProvider GetInstance() => instance.Value;
@@ -76,15 +71,6 @@ namespace BSA_LINQ
                 tasks = JsonConvert.DeserializeObject<IEnumerable<Models.Task>>(http.GetStringAsync($"{route}/tasks").Result);
             }
             return tasks;
-        }
-
-        public IEnumerable<TaskStateModel> GetStateModels()
-        {
-            if (stateModels == null)
-            {
-                stateModels = JsonConvert.DeserializeObject<IEnumerable<TaskStateModel>>(http.GetStringAsync($"{route}/taskstates").Result);
-            }
-            return stateModels;
         }
     }
 }

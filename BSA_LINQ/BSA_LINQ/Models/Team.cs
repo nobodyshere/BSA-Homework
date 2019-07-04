@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BSA_LINQ.Models
+﻿namespace BSA_LINQ.Models
 {
     public class Team
     {

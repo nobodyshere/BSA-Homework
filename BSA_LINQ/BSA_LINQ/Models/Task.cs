@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public System.DateTime Created_at { get; set; }
         public System.DateTime Finished_at { get; set; }
-        public int State { get; set; }
+        public TaskState State { get; set; }
         public int Project_id { get; set; }
         public int Performer_id { get; set; }
 
