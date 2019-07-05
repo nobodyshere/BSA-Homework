@@ -8,7 +8,7 @@ namespace BSA_LINQ
 {
     public class DataProvider
     {
-        private static readonly Lazy<DataProvider> instance = new Lazy<DataProvider>(() => new DataProvider());
+        private static readonly Lazy<DataProvider> Instance = new Lazy<DataProvider>(() => new DataProvider());
 
         IEnumerable<User> users;
         IEnumerable<Project> projects;
@@ -27,7 +27,7 @@ namespace BSA_LINQ
             http = new HttpClient();
         }
 
-        public void LoadData()
+        public void GetDataFromServer()
         {
             users = GetUsers();
             projects = GetProjects();
@@ -35,42 +35,30 @@ namespace BSA_LINQ
             tasks = GetTasks();
         }
 
-        public static DataProvider GetInstance() => instance.Value;
+        public static DataProvider GetInstance() => Instance.Value;
 
         public IEnumerable<User> GetUsers()
         {
-            if (users == null)
-            {
-                users = JsonConvert.DeserializeObject<IEnumerable<User>>(http.GetStringAsync($"{route}/users").Result);
-            }
-            return users;
+            return users ?? (users =
+                       JsonConvert.DeserializeObject<IEnumerable<User>>(http.GetStringAsync($"{route}/users").Result));
         }
 
         public IEnumerable<Project> GetProjects()
         {
-            if (projects == null)
-            {
-                projects = JsonConvert.DeserializeObject<IEnumerable<Project>>(http.GetStringAsync($"{route}/projects").Result);
-            }
-            return projects;
+            return projects ?? (projects =
+                       JsonConvert.DeserializeObject<IEnumerable<Project>>(http.GetStringAsync($"{route}/projects").Result));
         }
 
         public IEnumerable<Team> GetTeams()
         {
-            if (teams == null)
-            {
-                teams = JsonConvert.DeserializeObject<IEnumerable<Team>>(http.GetStringAsync($"{route}/teams").Result);
-            }
-            return teams;
+            return teams ?? (teams =
+                       JsonConvert.DeserializeObject<IEnumerable<Team>>(http.GetStringAsync($"{route}/teams").Result));
         }
 
         public IEnumerable<Models.Task> GetTasks()
         {
-            if (tasks == null)
-            {
-                tasks = JsonConvert.DeserializeObject<IEnumerable<Models.Task>>(http.GetStringAsync($"{route}/tasks").Result);
-            }
-            return tasks;
+            return tasks ?? (tasks =
+                       JsonConvert.DeserializeObject<IEnumerable<Models.Task>>(http.GetStringAsync($"{route}/tasks").Result));
         }
     }
 }

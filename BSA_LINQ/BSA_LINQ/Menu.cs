@@ -13,7 +13,7 @@ namespace BSA_LINQ
             linqService = new DataSortingService();
         }
 
-        public void MainMenu()
+        public void GetMainMenu()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Please, press any key to continue.");
@@ -57,7 +57,7 @@ namespace BSA_LINQ
                     run = false;
                     break;
                 case 1:
-                    DownloadData();
+                    GetData();
                     break;
                 case 2:
                     GetNumberOfTasks();
@@ -115,7 +115,7 @@ namespace BSA_LINQ
             if (project != null)
             {
                 Console.WriteLine($"Project ID: {project.Id}, Project Name: {project.Name}");
-                if (project != null)
+                if (longestTask != null)
                 {
                     Console.WriteLine($"Longest task of project (by description): {longestTask.Id} \n" +
                         $"With description: {longestTask.Description}");
@@ -125,7 +125,7 @@ namespace BSA_LINQ
                 }
                 else
                 {
-                    Console.WriteLine("There are no tasks in Project");
+                    Console.WriteLine("There are no tasks in this project");
                 }
 
                 Console.WriteLine("Total number of users in the project team, where either the project description is less than 25 characters or the number of tasks is less than 3:");
@@ -229,9 +229,9 @@ namespace BSA_LINQ
             }
         }
 
-        private void DownloadData()
+        private void GetData()
         {
-            data.LoadData();
+            data.GetDataFromServer();
             Console.WriteLine("Data was updated.");
         }
 

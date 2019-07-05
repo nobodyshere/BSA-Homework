@@ -76,18 +76,19 @@ namespace BSA_LINQ
         //P.S. - в данном случае, статус таска не имеет значения, фильтруем только по дате.
         public (User user, Project lastProject, int lastProjectTasksCount, int unfinishedTasksCount, Task longestTaskByDate) GetUserTasksData(int userId)
         {
-            return (from project in data.GetProjects()
-                    where project.Author_id == userId
-                    orderby project.Created_at descending
-                    let user = data.GetUsers().Where(x => x.Id == userId).FirstOrDefault()
-                    let lastProjectTasksCount = data.GetTasks().GroupBy(x => x.Project_id)
-                                                               .Where(x => x.Key == project.Id)
-                                                               .FirstOrDefault().Count()
-                    let unfinishedTasks = data.GetTasks().Count(x => x.Project_id == project.Id && x.State != TaskState.Finished)
-                    let longestTask = data.GetTasks().Where(x => x.Performer_id == user.Id)
-                                          .OrderBy(x => x.Created_at)
-                                          .ThenByDescending(x => x.Finished_at).FirstOrDefault()
-                    select (user, project, lastProjectTasksCount, unfinishedTasks, longestTask)).FirstOrDefault();
+            var currentUser = data.GetUsers().FirstOrDefault(x => x.Id == userId);
+            var lastProject = data.GetProjects()
+                                  .Where(x => x.Author_id == userId)
+                                  .OrderByDescending(x => x.Created_at)
+                                  .FirstOrDefault();
+            var tasksCount = data.GetTasks().GroupBy(x => x.Project_id)
+                                  .FirstOrDefault(x => x.Key == lastProject.Id).Count();
+            var notFinishedTask = data.GetTasks().Count(x => x.Project_id == lastProject.Id && x.State != TaskState.Finished);
+            var longestTaskbyDate = data.GetTasks().Where(x => x.Performer_id == userId).OrderBy(x => x.Created_at)
+                                         .ThenByDescending(x => x.Finished_at)
+                                         .FirstOrDefault();
+
+            return (currentUser, lastProject, tasksCount, notFinishedTask, longestTaskbyDate);
         }
 
         //7. Получить следующую структуру (передать Id проекта в параметры):
@@ -118,8 +119,6 @@ namespace BSA_LINQ
                        shortestTask,
                        users.Count()
                     )).FirstOrDefault();
-
-
         }
     }
 }
